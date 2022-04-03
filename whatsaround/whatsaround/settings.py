@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-iv(w&%wf&0l640ribj40zka#s(67tqr&k9l*pd)9c*3b^osey4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'wasite.herokuapp.com']
 
 AUTH_USER_MODEL = 'whatsaroundapp.OwnUser'
 
