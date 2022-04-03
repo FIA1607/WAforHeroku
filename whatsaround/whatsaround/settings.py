@@ -92,10 +92,10 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
-        'NAME': 'wadb',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'fedoto55_wadb',
+        'USER': 'fedoto55_wadb',
+        'PASSWORD': 'fi200016IF.',
+        'HOST': 'fedoto55.beget.tech',
         'PORT': '3306',
     }
 }
