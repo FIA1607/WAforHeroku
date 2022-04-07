@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+
 class OwnUserManager(BaseUserManager):
 
     def create_user(self, login, password):
