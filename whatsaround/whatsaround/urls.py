@@ -32,7 +32,7 @@ router.register(r'usermessages', UserMessageViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/drf-auth/', include('rest_framework.urls')),
+    #path('api/drf-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
     path('api/auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
