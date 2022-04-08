@@ -1,1 +1,1 @@
-web: gunicorn whatsaround.wsgi
+web: sh -c 'cd whatsaround && gunicorn whatsaround.wsgi --log-file=-'
