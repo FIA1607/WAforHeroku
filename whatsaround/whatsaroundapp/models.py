@@ -4,25 +4,38 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class OwnUserManager(BaseUserManager):
 
-    def create_user(self, login, password):
-
+    # Создаём метод для создания пользователя
+    def _create_user(self, email, login, password, **extra_fields):
+        # Проверяем есть ли Email
+        if not email:
+            # Выводим сообщение в консоль
+            raise ValueError("Вы не ввели Email")
+        # Проверяем есть ли логин
         if not login:
-            return ValueError('User must have login.')
-
-        user = self.model(login=login)
+            # Выводим сообщение в консоль
+            raise ValueError("Вы не ввели Логин")
+        # Делаем пользователя
+        user = self.model(
+            email=self.normalize_email(email),
+            login=login,
+            **extra_fields,
+        )
+        # Сохраняем пароль
         user.set_password(password)
+        # Сохраняем всё остальное
         user.save(using=self._db)
-
+        # Возвращаем пользователя
         return user
 
-    def create_superuser(self, login, password):
+    # Делаем метод для создание обычного пользователя
+    def create_user(self, email, login, password):
+        # Возвращаем нового созданного пользователя
+        return self._create_user(email, login, password)
 
-        user = self.create_user(login=login, password=password)
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
-
-        return user
+    # Делаем метод для создание админа сайта
+    def create_superuser(self, email, login, password):
+        # Возвращаем нового созданного админа
+        return self._create_user(email, login, password, is_staff=True, is_superuser=True)
 
 
 def definePathToStorePhoto(instance, filename):

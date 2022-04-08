@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.utils import timezone
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, status
 from django.shortcuts import render
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -13,13 +13,27 @@ from .serializers import *
 
 class OwnUserViewSet(viewsets.ModelViewSet):
     queryset = OwnUser.objects.all()
-    serializer_class = OwnUserSerializer
-    permission_classes = (IsAuthenticated,)
+    #serializer_class = OwnUserSerializer
+    #permission_classes = (IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return UserRegistrSerializer
+        else:
+            return OwnUserSerializer
 
 
 class PointViewSet(viewsets.ModelViewSet):
     serializer_class = PointSerializer
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         tagname = self.request.query_params.get("tagName")
