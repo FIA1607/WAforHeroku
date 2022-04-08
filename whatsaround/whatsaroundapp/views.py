@@ -14,7 +14,7 @@ from .serializers import *
 class OwnUserViewSet(viewsets.ModelViewSet):
     queryset = OwnUser.objects.all()
     serializer_class = OwnUserSerializer
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
 
 class PointViewSet(viewsets.ModelViewSet):
