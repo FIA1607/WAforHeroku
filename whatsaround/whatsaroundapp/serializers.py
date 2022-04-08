@@ -5,7 +5,7 @@ from .models import *
 class OwnUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = OwnUser
-        exclude = ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions')
+        exclude = ('password', 'last_login', 'is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions')
 
 
 class TagSerializer(serializers.ModelSerializer):
