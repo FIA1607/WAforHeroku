@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.db.models import Count
 from django.utils import timezone
 from rest_framework import generics, viewsets, status
 from django.shortcuts import render
@@ -22,7 +23,6 @@ class OwnUserViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -85,6 +85,11 @@ class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAuthenticated,)
+
+    def list(self, request):
+        queryset = Tag.objects.values('tagName').annotate(dcount=Count('pointId'))
+        serializer = TagListSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class PhotoViewSet(viewsets.ModelViewSet):

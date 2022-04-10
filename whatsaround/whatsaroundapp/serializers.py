@@ -14,6 +14,12 @@ class TagSerializer(serializers.ModelSerializer):
         fields =('__all__')
 
 
+class TagListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields =('tagName',)
+
+
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
@@ -22,8 +28,8 @@ class PhotoSerializer(serializers.ModelSerializer):
 
 class PointSerializer(serializers.ModelSerializer):
 
-    tags = TagSerializer(many=True)
-    photos = PhotoSerializer(many=True)
+    tags = TagSerializer(many=True, read_only=True)
+    photos = PhotoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Point
