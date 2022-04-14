@@ -38,10 +38,16 @@ class OwnUserManager(BaseUserManager):
         return self._create_user(email, login, password, is_staff=True, is_superuser=True)
 
 
-def definePathToStorePhoto(instance, filename):
-
+def definePathToStoreUserPhoto(instance, filename):
     if hasattr(instance, 'login'):
         return '{0}/namePhoto.jpg'.format(instance.login)
+    else:
+        return 'tempFilesForPhoto'
+
+
+def definePathToStorePointPhoto(instance, filename):
+    if hasattr(instance, 'pointId'):
+        return '{0}/namePhoto.jpg'.format(instance.pointId)
     else:
         return 'tempFilesForPhoto'
 
@@ -55,7 +61,7 @@ class OwnUser(AbstractBaseUser, PermissionsMixin):
     # phone = models.CharField(max_length=20)
     email = models.EmailField(max_length=255, unique=True)
     rating = models.FloatField(default=0)
-    userImage = models.ImageField(upload_to=definePathToStorePhoto, blank=True)
+    userImage = models.ImageField(upload_to=definePathToStoreUserPhoto, blank=True)
     # hasUserActivePoint = models.BooleanField(default=False)
     userCity = models.CharField(max_length=255, blank=True)
 
@@ -128,7 +134,7 @@ class Tag(models.Model):
 class Photo(models.Model):
 
     photoId = models.AutoField(primary_key=True)
-    photo = models.ImageField(upload_to=definePathToStorePhoto)
+    photo = models.ImageField(upload_to=definePathToStorePointPhoto)
     pointId = models.ForeignKey(Point, on_delete=models.CASCADE, related_name="photos")
 
     class Meta:
