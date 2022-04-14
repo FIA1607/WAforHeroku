@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.utils import timezone
 from rest_framework import generics, viewsets, status
 from django.shortcuts import render
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -40,20 +41,38 @@ class PointViewSet(viewsets.ModelViewSet):
         tagname = tagname.split(',') if tagname else None
         eventtime = self.request.query_params.get("eventTime")
         current_datetime = timezone.now()
-        print(current_datetime)
+
         if not eventtime:
             if not tagname:
                 return Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime)
             else:
                 return Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime,
-                                            tag__tagName__in=tagname)
+                                            tags__tagName__in=tagname)
         else:
             if not tagname:
                 return Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime,
                                             eventTime__lte=current_datetime)
             else:
                 return Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime,
-                                            eventTime__lte=current_datetime, tag__tagName=tagname)
+                                            eventTime__lte=current_datetime, tags__tagName=tagname)
+
+    @action(detail=False)
+    def users_points_nact(self, request):
+        current_datetime = timezone.now()
+        users_points = Point.objects.exclude(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime).filter(
+                       userId=request.query_params.get("userID"))
+        serializer = self.get_serializer(users_points, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False)
+    def users_points_a(self, request):
+        current_datetime = timezone.now()
+        users_points = Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime,
+                                            userId=request.query_params.get("userID"))
+        serializer = self.get_serializer(users_points, many=True)
+        return Response(serializer.data)
+
+
 
     # def get_serializer_class(self):
     #     if self.action == 'list':
