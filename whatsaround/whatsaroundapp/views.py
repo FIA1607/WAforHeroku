@@ -72,6 +72,18 @@ class PointViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(users_points, many=True)
         return Response(serializer.data)
 
+    @action(detail=False)
+    def search_points(self, request):
+        current_datetime = timezone.now()
+        query = request.query_params.get("q")
+        if not query:
+            points = Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime)
+        else:
+            points = Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime,
+                                          name__contains=query)
+        serializer = self.get_serializer(points, many=True)
+        return Response(serializer.data)
+
 
 
     # def get_serializer_class(self):

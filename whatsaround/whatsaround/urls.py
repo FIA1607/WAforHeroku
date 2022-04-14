@@ -13,12 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.template.defaulttags import url
 from django.urls import path, include, re_path
 
 from whatsaroundapp.views import *
 from rest_framework import routers
+
+from . import settings
 from .yasg import urlpatterns as doc_urls
 
 router = routers.SimpleRouter()
@@ -36,6 +39,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += doc_urls

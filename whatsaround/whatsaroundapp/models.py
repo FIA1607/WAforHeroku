@@ -41,7 +41,7 @@ class OwnUserManager(BaseUserManager):
 def definePathToStorePhoto(instance, filename):
 
     if hasattr(instance, 'login'):
-        return '{0}/namePhoto'.format(instance.login)
+        return '{0}/namePhoto.jpg'.format(instance.login)
     else:
         return 'tempFilesForPhoto'
 
