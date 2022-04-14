@@ -146,7 +146,7 @@ class PointMessage(models.Model):
 
     pointMessageId = models.AutoField(primary_key=True)
     userId = models.ForeignKey(OwnUser, on_delete=models.CASCADE)   #или использовать DO_NOTHING?
-    pointId = models.ForeignKey(Point, on_delete=models.CASCADE)
+    pointId = models.ForeignKey(Point, on_delete=models.CASCADE, related_name="point_messages")
     pointMessageDate = models.DateTimeField(auto_now_add=True)
     pointMessageContent = models.TextField(max_length=400)
 

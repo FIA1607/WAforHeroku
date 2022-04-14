@@ -26,10 +26,17 @@ class PhotoSerializer(serializers.ModelSerializer):
         fields =('__all__')
 
 
+class PointMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PointMessage
+        fields =('__all__')
+
+
 class PointSerializer(serializers.ModelSerializer):
 
     tags = TagSerializer(many=True, read_only=True)
     photos = PhotoSerializer(many=True, read_only=True)
+    point_messages = PointMessageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Point
@@ -39,12 +46,6 @@ class PointSerializer(serializers.ModelSerializer):
 class GuestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Guest
-        fields =('__all__')
-
-
-class PointMessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PointMessage
         fields =('__all__')
 
 
