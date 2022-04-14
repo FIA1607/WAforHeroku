@@ -56,6 +56,12 @@ class PointViewSet(viewsets.ModelViewSet):
                 return Point.objects.filter(timeCreation__lte=current_datetime, timeDuration__gt=current_datetime,
                                             eventTime__lte=current_datetime, tags__tagName=tagname)
 
+    def retrieve(self, request, pk=None):
+        queryset = Point.objects.all()
+        point = get_object_or_404(queryset, pk=pk)
+        serializer = PointSerializer(point)
+        return Response(serializer.data)
+
     @action(detail=False)
     def users_points_nact(self, request):
         current_datetime = timezone.now()
@@ -99,11 +105,7 @@ class PointViewSet(viewsets.ModelViewSet):
     #     serializer = PointSerializer(queryset, many=True)
     #     return Response(serializer.data)
     #
-    # def retrieve(self, request, pk=None):
-    #     queryset = self.get_queryset()
-    #     point = get_object_or_404(queryset, pk=pk)
-    #     serializer = PointSerializer(point)
-    #     return Response(serializer.data)
+
 
 
 class GuestViewSet(viewsets.ModelViewSet):
