@@ -120,7 +120,9 @@ class TagViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     def list(self, request):
-        queryset = Tag.objects.values('tagName').annotate(dcount=Count('pointId'))
+        current_datetime = timezone.now()
+        queryset = Tag.objects.values('tagName').annotate(dcount=Count('pointId'))\
+            .filter(pointId__timeCreation__lte=current_datetime, pointId__timeDuration__gt=current_datetime)
         serializer = TagListSerializer(queryset, many=True)
         return Response(serializer.data)
 
