@@ -92,17 +92,29 @@ pymysql.install_as_MySQLdb()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-        'NAME': 'fedoto55_wadb',
-        'USER': 'fedoto55_wadb',
-        'PASSWORD': 'fi200016IF.',
-        'HOST': 'fedoto55.beget.tech',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dlvs4crs331n1',
+        'USER': 'kvtijhalnwxtma',
+        'PASSWORD': '12f7c4327f240f8e9f931ac99f144183b50c5529f8a4ed3fff8a780a652166b8.',
+        'HOST': 'ec2-63-35-156-160.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#         'NAME': 'fedoto55_wadb',
+#         'USER': 'fedoto55_wadb',
+#         'PASSWORD': 'fi200016IF.',
+#         'HOST': 'fedoto55.beget.tech',
+#         'PORT': '3306',
+#     }
+# }
+
 
 # DATABASES = {
 #     'default': {

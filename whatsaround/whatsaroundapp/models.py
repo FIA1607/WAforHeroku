@@ -33,7 +33,7 @@ class OwnUserManager(BaseUserManager):
         return self._create_user(email, login, password)
 
     # Делаем метод для создание админа сайта
-    def create_superuser(self, email, login, password):
+    def create_superuser(self, login, password, email='iaf7@tpu.ru'):
         # Возвращаем нового созданного админа
         return self._create_user(email, login, password, is_staff=True, is_superuser=True)
 
